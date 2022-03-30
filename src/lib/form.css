@@ -1,0 +1,13 @@
+form {
+	padding: 10px;
+	border-radius: 4px;
+	box-shadow: var(--shadow);
+	background: #c0ff0020;
+	background: linear-gradient(to bottom right, #c0ff0020, #c0ff0050);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	min-width: 70%;
+}
