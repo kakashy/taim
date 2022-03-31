@@ -1,6 +1,7 @@
 <script>
-	import full from '/static/media/FullLogo.png'
+	import full from '/static/media/FullLogo.png';
 </script>
+
 <footer>
 	<div>
 		<ul>
@@ -20,8 +21,8 @@
 	</div>
 	<div class="craft">
 		Carefully crafted by
-		<br>
-		<img src={full} alt="Werux" height="70px">
+		<br />
+		<img src={full} alt="Werux" height="70px" />
 	</div>
 </footer>
 

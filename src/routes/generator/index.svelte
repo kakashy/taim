@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import { mwenyeji } from './db';
 	import { gen } from '$lib/timetable';
+	import { get } from 'svelte/store';
 	let gradeValue: string;
 	let streamValue: string;
 	let gradeItems: string[] = [];
@@ -37,16 +38,32 @@
 		currentStage: string
 	): Promise<number | void> {
 		if (currentLoad.length > 0) {
-			let doc = {
+			let doc: {
+				items: string[];
+				_id: string;
+				_rev?: string;
+			} = {
 				_id: currentStage,
 				items: currentLoad
 			};
 			const db = new PouchDB('taim');
-			const res = await db.put(doc).catch((err)=>{
-				if (err.status === 409){
-				return (stage = nextStage);
+			const res = await db.put(doc).catch(async (err) => {
+				// check for update conflicts
+				if (err.status === 409) {
+					// fetch the stored document to retrieve its id and rev
+					const storedDoc = await db.get(doc._id);
+					doc = {
+						items: currentLoad,
+						_id: currentStage,
+						_rev: storedDoc._rev
+					};
+					// update the modified doc
+					const res = await db.put(doc);
+					if (res.ok) {
+						return (stage = nextStage);
+					}
 				}
-			})
+			});
 			if (res.ok) {
 				return (stage = nextStage);
 			}
@@ -60,10 +77,6 @@
 	}
 	onMount(async () => {
 		const db = new PouchDB('taim');
-		// const info = await mwenyeji(db);
-		// if (info.doc_count === 2) {
-		// 	stage = 3;
-		// }
 		const pGrade: StoredDoc = await db.get('Grade');
 		const pStream: StoredDoc = await db.get('Stream');
 		if (pGrade.items) {
@@ -181,7 +194,7 @@
 	{/key}
 	<hr />
 	{#if generated}
-		<table>
+		<table class="mtable">
 			<tr>
 				<th> Period </th>
 				<th> Class & Learning Area</th>
@@ -196,7 +209,7 @@
 							<table class="tab2">
 								{#each grade as g}
 									<tr>
-										<td>
+										<td style="width: 150px;">
 											{`${g.Grade} ${g.Stream}`}
 										</td>
 										<td>

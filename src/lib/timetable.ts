@@ -1,16 +1,16 @@
 import { valLearningArea } from '$lib/valids';
 import _ from 'lodash';
 type Gen = {
-    Slot: string;
-    Grade: {
-        Grade: string;
-        Stream: string;
-        Area: string;
-    }[][];
-}[]
+	Slot: string;
+	Grade: {
+		Grade: string;
+		Stream: string;
+		Area: string;
+	}[][];
+}[];
 export function gen(validGrade: string[], validStream: string[]): Gen {
 	let touchedArea: string[];
-	const slot = ['7 AM', '8 AM'];
+	const slot = ['1', '2', '3', '4', '5', '6', '7', '8'];
 	const dump = slot.map((slot) => {
 		const vg = validGrade.map((g) => {
 			touchedArea = [];
@@ -26,7 +26,9 @@ export function gen(validGrade: string[], validStream: string[]): Gen {
 					/* checking whether the learning area has already been selected and if truthy,
                             we look for another candidate learning area
                         */
-					const area: string = _.includes(touchedArea, candidateArea) ? getCandidate(grade) : candidateArea;
+					const area: string = _.includes(touchedArea, candidateArea)
+						? getCandidate(grade)
+						: candidateArea;
 					// adding this fresh learning area to the list of the ones already found
 					touchedArea = [...touchedArea, area];
 					return area;

@@ -41,3 +41,8 @@ table tr td {
 	border: 1px solid #8080807a;
 	border-radius: 4px;
 }
+@media screen and (min-width: 550px) {
+	.mtable {
+		width: 75%;
+	}
+}

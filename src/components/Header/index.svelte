@@ -1,5 +1,5 @@
 <script>
-	import { page } from '$app/stores'
+	import { page } from '$app/stores';
 	function openNav() {
 		document.getElementById('side-nav').style.width = '50%';
 	}
@@ -18,8 +18,9 @@
 	<a href="/" class:active={$page.url.pathname === '/'}>Home</a>
 	<a href="/generator" class:active={$page.url.pathname === '/generator'}>Generator</a>
 	<a href="/pricing" class:active={$page.url.pathname === '/pricing'}>Pricing</a>
-	<a href="/privacy-policy" class:active={$page.url.pathname === '/privacy-policy'}>Privacy Policy</a>
-
+	<a href="/privacy-policy" class:active={$page.url.pathname === '/privacy-policy'}
+		>Privacy Policy</a
+	>
 </div>
 
 <style>
@@ -61,7 +62,7 @@
 		background-color: #0d0d0e;
 		overflow-x: hidden;
 		transition: 0.3s;
-		padding-top:50px;
+		padding-top: 50px;
 		box-shadow: var(--shadow);
 	}
 
